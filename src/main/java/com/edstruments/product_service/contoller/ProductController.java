@@ -1,6 +1,6 @@
 package com.edstruments.product_service.contoller;
 
-import com.edstruments.product_service.entity.Product;
+import com.edstruments.product_service.model.Product;
 import com.edstruments.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
