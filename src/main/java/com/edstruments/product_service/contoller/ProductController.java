@@ -2,6 +2,7 @@ package com.edstruments.product_service.contoller;
 
 import com.edstruments.product_service.model.Product;
 import com.edstruments.product_service.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +30,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product){
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product){
         Product createdProduct = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product, @PathVariable Long id){
+    public ResponseEntity<Product> updateProduct(@Valid @RequestBody Product product, @PathVariable Long id){
         Product updatedProduct = productService.updateProductById(product, id);
         return (updatedProduct == null) ?
                 ResponseEntity.notFound().build() :
