@@ -12,6 +12,9 @@ A simple RESTful API built with Spring Boot to manage a list of products.
 - RESTful API structure
 - In-memory H2 database (or switch to PostgreSQL/MySQL easily)
 - Clean architecture with controller, service, and repository layers
+- Input validation using `jakarta.validation`
+- Centralized exception handling using `@RestControllerAdvice`
+- API tested via Postman collection
 
 ---
 
@@ -43,13 +46,66 @@ product-service/
 ## 🛠️ Tech Stack
 
 - Java 17+
-- Spring Boot
+- Spring Boot 3.x
 - Spring Data JPA
 - H2 (or PostgreSQL/MySQL)
 - Maven
+- Jakarta Bean Validation (JSR-380)
 - Postman (for API testing)
 
 ---
+
+
+## 🧪 Input Validation
+
+Validated using `@Valid` and `jakarta.validation.constraints`:
+
+| Field     | Constraint                            |
+|-----------|----------------------------------------|
+| `name`    | `@NotBlank` – must not be blank        |
+| `price`   | `@Positive` – must be a positive value |
+
+### ❌ Sample Invalid Payload:
+
+```json
+{
+  "name": "",
+  "description": "Laptop",
+  "price": -1200
+}
+
+```
+
+## ✅ Response (400 Bad Request):
+```json
+{
+  "name": "Name must not be blank",
+  "price": "Price must be positive"
+}
+```
+
+---
+
+## ⚠️ Exception Handling
+
+Custom exceptions handled by `@RestControllerAdvice`:
+
+| Exception                        | When It Happens                               | HTTP Status |
+|----------------------------------|-----------------------------------------------|-------------|
+| `ProductNotFoundException`       | Product ID does not exist                     | 404         |
+| `MethodArgumentNotValidException`| Input validation fails (invalid fields)       | 400         |
+| `Exception` (generic fallback)   | Any unhandled exception                       | 500         |
+
+### 🔍 Sample 404 Response:
+
+```json
+{
+  "error": "Product with id 10 not found"
+}
+```
+
+---
+
 
 ## 📥 Installation & Running
 
