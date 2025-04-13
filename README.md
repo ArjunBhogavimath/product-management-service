@@ -23,6 +23,9 @@ product-service/
 │   └── main/
 │       ├── java/com/edstruments/product_service/
 │       │   ├── controller/
+│       │   ├── exception/
+│       │   │   ├── GlobalExceptionHandler.java
+│       │   │   └── ProductNotFoundException.java
 │       │   ├── model/
 │       │   ├── repository/
 │       │   ├── service/
