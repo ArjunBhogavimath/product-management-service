@@ -1,5 +1,6 @@
 package com.edstruments.product_service.service;
 
+import com.edstruments.product_service.exception.ProductNotFoundException;
 import com.edstruments.product_service.model.Product;
 import com.edstruments.product_service.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ProductService {
     }
 
     public Product getProductById(Long id){
-        return productRepository.findById(id).orElse(null);
+        return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     public Product createProduct(Product product){
